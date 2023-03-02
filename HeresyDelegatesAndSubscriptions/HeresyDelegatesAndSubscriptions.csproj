@@ -1,0 +1,11 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net4.7</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Folder Include="src\Interfaces" />
+  </ItemGroup>
+
+</Project>
