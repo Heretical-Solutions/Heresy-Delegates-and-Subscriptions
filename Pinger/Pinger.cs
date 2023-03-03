@@ -28,21 +28,11 @@ namespace HereticalSolutions.Delegates.Pinging
 			multicastDelegate += @delegate;
 		}
         
-		public void Subscribe(object @delegate)
-		{
-			multicastDelegate += (Action)@delegate;
-		}
-
 		public void Unsubscribe(Action @delegate)
 		{
 			multicastDelegate -= @delegate;
 		}
         
-		public void Unsubscribe(object @delegate)
-		{
-			multicastDelegate -= (Action)@delegate;
-		}
-		
 		#endregion
 	}
 }
