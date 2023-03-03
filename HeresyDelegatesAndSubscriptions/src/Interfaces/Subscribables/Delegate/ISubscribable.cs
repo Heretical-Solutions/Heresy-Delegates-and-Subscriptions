@@ -6,10 +6,6 @@ namespace HereticalSolutions.Delegates
     {
         void Subscribe(Action @delegate);
         
-        void Subscribe(object @delegate);
-
         void Unsubscribe(Action @delegate);
-        
-        void Unsubscribe(object @delegate);
     }
 }
