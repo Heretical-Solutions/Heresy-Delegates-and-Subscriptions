@@ -8,4 +8,8 @@
     <Folder Include="src\Interfaces" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="../Dependencies/HeresyRepositories/HeresyDatabasesAndRepositories/HeresyDatabasesAndRepositories.csproj" />
+  </ItemGroup>
+
 </Project>
