@@ -2,10 +2,10 @@ using System;
 
 namespace HereticalSolutions.Delegates
 {
-    public interface ISubscribableSingleArgumentGeneric<TArgument>
+    public interface ISubscribableSingleArgumentGeneric<TValue>
     {
-        void Subscribe(Action<TArgument> @delegate);
+        void Subscribe(Action<TValue> @delegate);
 
-        void Unsubscribe(Action<TArgument> @delegate);
+        void Unsubscribe(Action<TValue> @delegate);
     }
 }

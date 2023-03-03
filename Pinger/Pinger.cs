@@ -3,14 +3,10 @@ using System;
 namespace HereticalSolutions.Delegates.Pinging
 {
 	public class Pinger
-		: IPublisher,
-		  ISubscribable
+		: IPublisherNoArguments,
+		  ISubscribableNoArguments
 	{
-		#region Subscriptions
-		
 		private Action multicastDelegate;
-
-		#endregion
 
 		#region IPublisher
 		

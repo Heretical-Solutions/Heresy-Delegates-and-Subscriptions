@@ -4,12 +4,8 @@ namespace HereticalSolutions.Delegates
 {
     public interface ISubscribableSingleArgument
     {
-        void Subscribe(object @delegate);
-        
-        void Subscribe<TArgument>(Action<TArgument> @delegate);
+        void Subscribe<TValue>(Action<TValue> @delegate);
 
-        void Unsubscribe(object @delegate);
-        
-        void Unsubscribe<TArgument>(Action<TArgument> @delegate);
+        void Unsubscribe<TValue>(Action<TValue> @delegate);
     }
 }

@@ -4,7 +4,7 @@ using HereticalSolutions.Pools;
 namespace HereticalSolutions.Delegates.Pinging
 {
 	public class PingerNonAlloc
-		: IPublisher,
+		: IPublisherNoArguments,
 		  ISubscribableNonAlloc<IPingHandler>
 	{
 		#region Subscriptions
