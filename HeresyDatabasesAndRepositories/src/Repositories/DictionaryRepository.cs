@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using HereticalSolutions.Repositories.Factories;
 
 namespace HereticalSolutions.Repositories
 {
@@ -9,12 +10,13 @@ namespace HereticalSolutions.Repositories
 	/// <typeparam name="TValue">Value data type</typeparam>
 	public class DictionaryRepository<TKey, TValue> :
 		IRepository<TKey, TValue>,
-		IReadOnlyRepository<TKey, TValue>
+		IReadOnlyRepository<TKey, TValue>,
+		IClonableRepository<TKey, TValue>
 	{
 		/// <summary>
 		/// Actual storage
 		/// </summary>
-		protected Dictionary<TKey, TValue> database;
+		private readonly Dictionary<TKey, TValue> database;
 
 		public DictionaryRepository(Dictionary<TKey, TValue> database)
 		{
@@ -99,5 +101,10 @@ namespace HereticalSolutions.Repositories
 		/// </summary>
 		/// <value>Keys</value>
 		public IEnumerable<TKey> Keys { get { return database.Keys; } }
+
+		public IRepository<TKey, TValue> Clone()
+		{
+			return RepositoriesFactory.CloneDictionaryRepository(database);
+		}
 	}
 }
