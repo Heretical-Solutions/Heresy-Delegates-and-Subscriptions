@@ -22,62 +22,30 @@ namespace HereticalSolutions.Repositories
 			this.database = database;
 		}
 
-		/// <summary>
-		/// Does the repository have the data by the given type?
-		/// </summary>
-		/// <typeparam name="TValue">Value data type</typeparam>
-		/// <returns>Does it or not</returns>
+		#region IObjectRepository
+
+		#region IReadOnlyObjectRepository
+		
 		public bool Has<TValue>()
 		{
 			return database.Has(typeof(TValue));
 		}
 
-		/// <summary>
-		/// Add the given data by the given type
-		/// </summary>
-		/// <param name="value">Value</param>
-		/// <typeparam name="TValue">Value data type</typeparam>
-		public void Add<TValue>(TValue value)
+		public bool Has(Type valueType)
 		{
-			database.Add(typeof(TValue), value);
+			return database.Has(valueType);
 		}
 
-		/// <summary>
-		/// Update the data by the given type
-		/// </summary>
-		/// <param name="value">Value</param>
-		/// <typeparam name="TValue">Value data type</typeparam>
-		public void Update<TValue>(TValue value)
-		{
-			database.Update(typeof(TValue), value);
-		}
-
-		/// <summary>
-		/// Set the data by the given type
-		/// </summary>
-		/// <param name="value">Value</param>
-		/// <typeparam name="TValue">Value data type</typeparam>
-		public void AddOrUpdate<TValue>(TValue value)
-		{
-			database.AddOrUpdate(typeof(TValue), value);
-		}
-
-		/// <summary>
-		/// Retrieve the data by the given type
-		/// </summary>
-		/// <typeparam name="TValue">Value data type</typeparam>
-		/// <returns>Value</returns>
 		public TValue Get<TValue>()
 		{
 			return (TValue)database.Get(typeof(TValue));
 		}
 
-		/// <summary>
-		/// Retrieve the data by the given type if it is present
-		/// </summary>
-		/// <param name="value">Value</param>
-		/// <typeparam name="TValue">Value data type</typeparam>
-		/// <returns>Was the data present</returns>
+		public object Get(Type valueType)
+		{
+			return database.Get(valueType);
+		}
+
 		public bool TryGet<TValue>(out TValue value)
 		{
 			value = default(TValue);
@@ -89,28 +57,68 @@ namespace HereticalSolutions.Repositories
 
 			return result;
 		}
+		
+		public bool TryGet(Type valueType, out object value)
+		{
+			return database.TryGet(valueType, out value);
+		}
 
-		/// <summary>
-		/// Remove the data by the given type
-		/// </summary>
-		/// <typeparam name="TValue">Value data type</typeparam>
+		public IEnumerable<Type> Keys
+		{
+			get => database.Keys;
+		}
+		
+		#endregion
+		
+		public void Add<TValue>(TValue value)
+		{
+			database.Add(typeof(TValue), value);
+		}
+
+		public void Add(Type valueType, object value)
+		{
+			database.AddOrUpdate(valueType, value);
+		}
+		
+		public void Update<TValue>(TValue value)
+		{
+			database.Update(typeof(TValue), value);
+		}
+
+		public void Update(Type valueType, object value)
+		{
+			database.Update(valueType, value);
+		}
+
+		public void AddOrUpdate<TValue>(TValue value)
+		{
+			database.AddOrUpdate(typeof(TValue), value);
+		}
+
+		public void AddOrUpdate(Type valueType, object value)
+		{
+			database.AddOrUpdate(valueType, value);
+		}
+
 		public void Remove<TValue>()
 		{
 			database.Remove(typeof(TValue));
 		}
 
-		/// <summary>
-		/// List the types present in the repository
-		/// </summary>
-		/// <value>Keys</value>
-		public IEnumerable<Type> Keys
+		public void Remove(Type valueType)
 		{
-			get => database.Keys;
+			database.Remove(valueType);
 		}
 
+		#endregion
+
+		#region IClonable
+		
 		public IObjectRepository Clone()
 		{
 			return RepositoriesFactory.CloneDictionaryObjectRepository(database);
 		}
+		
+		#endregion
 	}
 }
