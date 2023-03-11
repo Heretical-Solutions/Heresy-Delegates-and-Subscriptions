@@ -7,9 +7,9 @@ namespace HereticalSolutions.Delegates.Broadcasting
         : IPublisherSingleArgument,
           ISubscribableSingleArgument
     {
-        private IReadOnlyRepository<Type, object> broadcasterRepository;
+        private readonly IReadOnlyObjectRepository broadcasterRepository;
 
-        public BroadcasterWithRepository(IReadOnlyRepository<Type, object> broadcasterRepository)
+        public BroadcasterWithRepository(IReadOnlyObjectRepository broadcasterRepository)
         {
             this.broadcasterRepository = broadcasterRepository;
         }
