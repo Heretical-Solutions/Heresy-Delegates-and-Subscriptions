@@ -1,6 +1,6 @@
 namespace HereticalSolutions.Delegates
 {
-    public interface ISubscribableNonAlloc<TValue>
+    public interface ISubscribableNonAllocNoArguments<TValue>
     {
         IPoolElement<TValue> Subscribe(TValue handler);
 
