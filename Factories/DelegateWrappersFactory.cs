@@ -13,11 +13,6 @@ namespace HereticalSolutions.Delegates.Factories
             return new DelegateWrapperNoArgs(@delegate);
         }
         
-        public static DelegateWrapperSingleArg BuildDelegateWrapperSingleArg(Action<object> @delegate)
-        {
-            return new DelegateWrapperSingleArg(@delegate);
-        }
-        
         public static DelegateWrapperSingleArgGeneric<TValue> BuildDelegateWrapperSingleArgGeneric<TValue>(Action<TValue> @delegate)
         {
             return new DelegateWrapperSingleArgGeneric<TValue>(@delegate);

@@ -1,4 +1,3 @@
-using System;
 using HereticalSolutions.Repositories;
 
 namespace HereticalSolutions.Delegates.Broadcasting
@@ -34,7 +33,7 @@ namespace HereticalSolutions.Delegates.Broadcasting
 
         #region INonAllocSubscribableSingleArg
 		
-        public void Subscribe<TValue>(Action<TValue> @delegate)
+        public void Subscribe<TValue>(ISubscriptionHandler<INonAllocSubscribableSingleArgGeneric<TValue>, IInvokableSingleArgGeneric<TValue>> subscription)
         {
             var messageType = typeof(TValue);
             
@@ -43,12 +42,12 @@ namespace HereticalSolutions.Delegates.Broadcasting
                     out object broadcasterObject))
                 return;
 
-            var broadcaster = (ISubscribableSingleArgGeneric<TValue>)broadcasterObject;
+            var broadcaster = (INonAllocSubscribableSingleArgGeneric<TValue>)broadcasterObject;
             
-            broadcaster.Subscribe(@delegate);
+            broadcaster.Subscribe(subscription);
         }
 
-        public void Unsubscribe<TValue>(Action<TValue> @delegate)
+        public void Unsubscribe<TValue>(ISubscriptionHandler<INonAllocSubscribableSingleArgGeneric<TValue>, IInvokableSingleArgGeneric<TValue>> subscription)
         {
             var messageType = typeof(TValue);
             
@@ -57,21 +56,11 @@ namespace HereticalSolutions.Delegates.Broadcasting
                     out object broadcasterObject))
                 return;
 
-            var broadcaster = (ISubscribableSingleArgGeneric<TValue>)broadcasterObject;
+            var broadcaster = (INonAllocSubscribableSingleArgGeneric<TValue>)broadcasterObject;
             
-            broadcaster.Unsubscribe(@delegate);
+            broadcaster.Unsubscribe(subscription);
         }
 
         #endregion
-
-        public void Subscribe(ISubscriptionHandler<INonAllocSubscribableSingleArg, IInvokableSingleArg> subscription)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void Unsubscribe(ISubscriptionHandler<INonAllocSubscribableSingleArg, IInvokableSingleArg> subscription)
-        {
-            throw new NotImplementedException();
-        }
     }
 }
