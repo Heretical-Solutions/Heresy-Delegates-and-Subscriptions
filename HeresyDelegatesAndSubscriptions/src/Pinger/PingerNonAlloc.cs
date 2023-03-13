@@ -9,17 +9,17 @@ namespace HereticalSolutions.Delegates.Pinging
 	{
 		#region Subscriptions
 		
-		private INonAllocPool<IPingHandler> subscriptionsPool;
+		private readonly INonAllocDecoratedPool<IInvokableNoArgs> subscriptionsPool;
 
-		private IIndexable<IPoolElement<IPingHandler>> subscriptionsAsIndexable;
+		private readonly IIndexable<IPoolElement<IInvokableNoArgs>> subscriptionsAsIndexable;
 
-		private IFixedSizeCollection<IPoolElement<IPingHandler>> subscriptionsWithCapacity;
+		private readonly IFixedSizeCollection<IPoolElement<IInvokableNoArgs>> subscriptionsWithCapacity;
 
 		#endregion
 		
 		#region Buffer
 
-		private IPingHandler[] currentSubscriptionsBuffer;
+		private IInvokableNoArgs[] currentSubscriptionsBuffer;
 
 		private int currentSubscriptionsBufferCount = -1;
 
@@ -27,23 +27,23 @@ namespace HereticalSolutions.Delegates.Pinging
 		
 		private bool pingInProgress = false;
 
-		public Pinger(
-			INonAllocPool<IPingHandler> subscriptionsPool,
-			INonAllocPool<IPingHandler> subscriptionsContents)
+		public PingerNonAlloc(
+			INonAllocDecoratedPool<IInvokableNoArgs> subscriptionsPool,
+			INonAllocDecoratedPool<IInvokableNoArgs> subscriptionsContents)
 		{
 			this.subscriptionsPool = subscriptionsPool;
 
-			subscriptionsAsIndexable = (IIndexable<IPoolElement<IPingHandler>>)subscriptionsContents;
+			subscriptionsAsIndexable = (IIndexable<IPoolElement<IInvokableNoArgs>>)subscriptionsContents;
 
 			subscriptionsWithCapacity =
-				(IFixedSizeCollection<IPoolElement<IPingHandler>>)subscriptionsContents;
+				(IFixedSizeCollection<IPoolElement<IInvokableNoArgs>>)subscriptionsContents;
 
-			currentSubscriptionsBuffer = new IPingHandler[subscriptionsWithCapacity.Capacity];
+			currentSubscriptionsBuffer = new IInvokableNoArgs[subscriptionsWithCapacity.Capacity];
 		}
 
 		#region ISubscribableNonAlloc
 		
-		public IPoolElement<IPingHandler> Subscribe(IPingHandler handler)
+		public IPoolElement<IInvokableNoArgs> Subscribe(IInvokableNoArgs handler)
 		{
 			var subscriptionElement = subscriptionsPool.Pop();
 
@@ -52,7 +52,7 @@ namespace HereticalSolutions.Delegates.Pinging
 			return subscriptionElement;
 		}
 
-		public void Unsubscribe(IPoolElement<IPingHandler> subscription)
+		public void Unsubscribe(IPoolElement<IInvokableNoArgs> subscription)
 		{
 			TryUnsubscribeFromBuffer(subscription);
 			
@@ -61,7 +61,7 @@ namespace HereticalSolutions.Delegates.Pinging
 			subscriptionsPool.Push(subscription);
 		}
 
-		private void TryUnsubscribeFromBuffer(IPoolElement<IPingHandler> subscriptionElement)
+		private void TryUnsubscribeFromBuffer(IPoolElement<IInvokableNoArgs> subscriptionElement)
 		{
 			if (!pingInProgress)
 				return;
@@ -95,7 +95,7 @@ namespace HereticalSolutions.Delegates.Pinging
 		private void ValidateBufferSize()
 		{
 			if (currentSubscriptionsBuffer.Length < subscriptionsWithCapacity.Capacity)
-				currentSubscriptionsBuffer = new IPingHandler[subscriptionsWithCapacity.Capacity];
+				currentSubscriptionsBuffer = new IInvokableNoArgs[subscriptionsWithCapacity.Capacity];
 		}
 
 		private void CopySubscriptionsToBuffer()
