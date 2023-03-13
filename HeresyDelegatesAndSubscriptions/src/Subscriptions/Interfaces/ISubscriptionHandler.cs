@@ -2,7 +2,7 @@ using HereticalSolutions.Pools;
 
 namespace HereticalSolutions.Delegates
 {
-    public interface ISubscriptionHandler<TSubscribable, TInvokable>
+    public interface ISubscriptionHandler<TSubscribable, TInvokable> : ISubscription<TSubscribable>
     {
         TInvokable Delegate { get; }
 

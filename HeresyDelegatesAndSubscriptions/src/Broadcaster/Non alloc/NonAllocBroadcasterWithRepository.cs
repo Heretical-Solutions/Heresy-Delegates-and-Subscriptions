@@ -1,16 +1,15 @@
 using System;
-
 using HereticalSolutions.Repositories;
 
 namespace HereticalSolutions.Delegates.Broadcasting
 {
-    public class BroadcasterWithRepository
+    public class NonAllocBroadcasterWithRepository
         : IPublisherSingleArg,
-          ISubscribableSingleArg
+          INonAllocSubscribableSingleArg
     {
         private readonly IReadOnlyObjectRepository broadcasterRepository;
 
-        public BroadcasterWithRepository(IReadOnlyObjectRepository broadcasterRepository)
+        public NonAllocBroadcasterWithRepository(IReadOnlyObjectRepository broadcasterRepository)
         {
             this.broadcasterRepository = broadcasterRepository;
         }
@@ -33,7 +32,7 @@ namespace HereticalSolutions.Delegates.Broadcasting
 
         #endregion
 
-        #region ISubscribableSingleArg
+        #region INonAllocSubscribableSingleArg
 		
         public void Subscribe<TValue>(Action<TValue> @delegate)
         {
@@ -64,5 +63,15 @@ namespace HereticalSolutions.Delegates.Broadcasting
         }
 
         #endregion
+
+        public void Subscribe(ISubscriptionHandler<INonAllocSubscribableSingleArg, IInvokableSingleArg> subscription)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void Unsubscribe(ISubscriptionHandler<INonAllocSubscribableSingleArg, IInvokableSingleArg> subscription)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

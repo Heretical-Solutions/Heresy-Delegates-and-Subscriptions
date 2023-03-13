@@ -6,14 +6,14 @@ using HereticalSolutions.Pools;
 
 namespace HereticalSolutions.Delegates.Subscriptions
 {
-    public class SubscriptionNoArgs
-        : ISubscription<INonAllocSubscribableNoArgs>,
-          ISubscriptionHandler<INonAllocSubscribableNoArgs, IInvokableNoArgs>
+    public class SubscriptionSingleArgGeneric<TValue>
+        : ISubscription<INonAllocSubscribableSingleArgGeneric<TValue>>,
+          ISubscriptionHandler<INonAllocSubscribableSingleArgGeneric<TValue>, IInvokableSingleArgGeneric<TValue>>
     {
-        public SubscriptionNoArgs(
-            Action @delegate)
+        public SubscriptionSingleArgGeneric(
+            Action<TValue> @delegate)
         {
-            Delegate = DelegatesFactory.BuildDelegateWrapperNoArgs(@delegate);
+            Delegate = DelegatesFactory.BuildDelegateWrapperSingleArgGeneric(@delegate);
 
             Active = false;
 
@@ -26,9 +26,9 @@ namespace HereticalSolutions.Delegates.Subscriptions
         
         public bool Active { get; private set;  }
         
-        public INonAllocSubscribableNoArgs Publisher { get; private set; }
+        public INonAllocSubscribableSingleArgGeneric<TValue> Publisher { get; private set; }
 
-        public void Subscribe(INonAllocSubscribableNoArgs publisher)
+        public void Subscribe(INonAllocSubscribableSingleArgGeneric<TValue> publisher)
         {
             if (Active)
                 return;
@@ -48,13 +48,13 @@ namespace HereticalSolutions.Delegates.Subscriptions
 
         #region ISubscriptionHandler
 
-        public IInvokableNoArgs Delegate { get; private set; }
+        public IInvokableSingleArgGeneric<TValue> Delegate { get; private set; }
 
-        public IPoolElement<IInvokableNoArgs> PoolElement { get; private set; }
+        public IPoolElement<IInvokableSingleArgGeneric<TValue>> PoolElement { get; private set; }
         
         public void Activate(
-            INonAllocSubscribableNoArgs publisher,
-            IPoolElement<IInvokableNoArgs> poolElement)
+            INonAllocSubscribableSingleArgGeneric<TValue> publisher,
+            IPoolElement<IInvokableSingleArgGeneric<TValue>> poolElement)
         {
             PoolElement = poolElement;
 

@@ -8,7 +8,7 @@ namespace HereticalSolutions.Delegates.Broadcasting
 	{
 		private Action<TValue> multicastDelegate;
 		
-		#region IPublisherSingleArgumentGeneric
+		#region IPublisherSingleArgGeneric
 
 		public void Publish(TValue value)
 		{
@@ -17,7 +17,7 @@ namespace HereticalSolutions.Delegates.Broadcasting
 
 		#endregion
 
-		#region ISubscribableSingleArgumentGeneric
+		#region ISubscribableSingleArgGeneric
 		
 		public void Subscribe(Action<TValue> @delegate)
 		{

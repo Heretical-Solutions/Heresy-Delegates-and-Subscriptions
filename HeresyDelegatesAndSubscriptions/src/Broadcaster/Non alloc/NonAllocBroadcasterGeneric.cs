@@ -1,51 +1,50 @@
 using System;
-
 using HereticalSolutions.Collections;
 using HereticalSolutions.Pools;
 
 namespace HereticalSolutions.Delegates.Pinging
 {
-	public class PingerNonAlloc
-		: IPublisherNoArgs,
-		  INonAllocSubscribableNoArgs
+	public class NonAllocBroadcasterGeneric<TValue>
+		: IPublisherSingleArgGeneric<TValue>,
+		  INonAllocSubscribableSingleArgGeneric<TValue>
 	{
 		#region Subscriptions
 		
-		private readonly INonAllocDecoratedPool<IInvokableNoArgs> subscriptionsPool;
+		private readonly INonAllocDecoratedPool<IInvokableSingleArgGeneric<TValue>> subscriptionsPool;
 
-		private readonly IIndexable<IPoolElement<IInvokableNoArgs>> subscriptionsAsIndexable;
+		private readonly IIndexable<IPoolElement<IInvokableSingleArgGeneric<TValue>>> subscriptionsAsIndexable;
 
-		private readonly IFixedSizeCollection<IPoolElement<IInvokableNoArgs>> subscriptionsWithCapacity;
+		private readonly IFixedSizeCollection<IPoolElement<IInvokableSingleArgGeneric<TValue>>> subscriptionsWithCapacity;
 
 		#endregion
 		
 		#region Buffer
 
-		private IInvokableNoArgs[] currentSubscriptionsBuffer;
+		private IInvokableSingleArgGeneric<TValue>[] currentSubscriptionsBuffer;
 
 		private int currentSubscriptionsBufferCount = -1;
 
 		#endregion
 		
-		private bool pingInProgress = false;
+		private bool broadcastInProgress = false;
 
-		public PingerNonAlloc(
-			INonAllocDecoratedPool<IInvokableNoArgs> subscriptionsPool,
-			INonAllocPool<IInvokableNoArgs> subscriptionsContents)
+		public NonAllocBroadcasterGeneric(
+			INonAllocDecoratedPool<IInvokableSingleArgGeneric<TValue>> subscriptionsPool,
+			INonAllocPool<IInvokableSingleArgGeneric<TValue>> subscriptionsContents)
 		{
 			this.subscriptionsPool = subscriptionsPool;
 
-			subscriptionsAsIndexable = (IIndexable<IPoolElement<IInvokableNoArgs>>)subscriptionsContents;
+			subscriptionsAsIndexable = (IIndexable<IPoolElement<IInvokableSingleArgGeneric<TValue>>>)subscriptionsContents;
 
 			subscriptionsWithCapacity =
-				(IFixedSizeCollection<IPoolElement<IInvokableNoArgs>>)subscriptionsContents;
+				(IFixedSizeCollection<IPoolElement<IInvokableSingleArgGeneric<TValue>>>)subscriptionsContents;
 
-			currentSubscriptionsBuffer = new IInvokableNoArgs[subscriptionsWithCapacity.Capacity];
+			currentSubscriptionsBuffer = new IInvokableSingleArgGeneric<TValue>[subscriptionsWithCapacity.Capacity];
 		}
 
-		#region INonAllocSubscribableNoArgs
+		#region INonAllocSubscribableSingleArgGeneric
 		
-		public void Subscribe(ISubscriptionHandler<INonAllocSubscribableNoArgs, IInvokableNoArgs> subscription)
+		public void Subscribe(ISubscriptionHandler<INonAllocSubscribableSingleArgGeneric<TValue>, IInvokableSingleArgGeneric<TValue>> subscription)
 		{
 			#region Validate
 			
@@ -70,7 +69,7 @@ namespace HereticalSolutions.Delegates.Pinging
 			subscription.Activate(this, subscriptionElement);
 		}
 
-		public void Unsubscribe(ISubscriptionHandler<INonAllocSubscribableNoArgs, IInvokableNoArgs> subscription)
+		public void Unsubscribe(ISubscriptionHandler<INonAllocSubscribableSingleArgGeneric<TValue>, IInvokableSingleArgGeneric<TValue>> subscription)
 		{
 			#region Validate
 			
@@ -96,7 +95,7 @@ namespace HereticalSolutions.Delegates.Pinging
 			subscription.Terminate();
 		}
 
-		public void Unsubscribe(IPoolElement<IInvokableNoArgs> subscription)
+		public void Unsubscribe(IPoolElement<IInvokableSingleArgGeneric<TValue>> subscription)
 		{
 			TryRemoveFromBuffer(subscription);
 			
@@ -105,9 +104,9 @@ namespace HereticalSolutions.Delegates.Pinging
 			subscriptionsPool.Push(subscription);
 		}
 
-		private void TryRemoveFromBuffer(IPoolElement<IInvokableNoArgs> subscriptionElement)
+		private void TryRemoveFromBuffer(IPoolElement<IInvokableSingleArgGeneric<TValue>> subscriptionElement)
 		{
-			if (!pingInProgress)
+			if (!broadcastInProgress)
 				return;
 				
 			for (int i = 0; i < currentSubscriptionsBufferCount; i++)
@@ -121,9 +120,9 @@ namespace HereticalSolutions.Delegates.Pinging
 		
 		#endregion
 
-		#region IPublisherNoArgs
+		#region IPublisherSingleArgGeneric
 		
-		public void Publish()
+		public void Publish(TValue value)
 		{
 			ValidateBufferSize();
 
@@ -131,7 +130,7 @@ namespace HereticalSolutions.Delegates.Pinging
 
 			CopySubscriptionsToBuffer();
 
-			InvokeSubscriptions();
+			InvokeSubscriptions(value);
 
 			EmptyBuffer();
 		}
@@ -139,7 +138,7 @@ namespace HereticalSolutions.Delegates.Pinging
 		private void ValidateBufferSize()
 		{
 			if (currentSubscriptionsBuffer.Length < subscriptionsWithCapacity.Capacity)
-				currentSubscriptionsBuffer = new IInvokableNoArgs[subscriptionsWithCapacity.Capacity];
+				currentSubscriptionsBuffer = new IInvokableSingleArgGeneric<TValue>[subscriptionsWithCapacity.Capacity];
 		}
 
 		private void CopySubscriptionsToBuffer()
@@ -148,17 +147,17 @@ namespace HereticalSolutions.Delegates.Pinging
 				currentSubscriptionsBuffer[i] = subscriptionsAsIndexable[i].Value;
 		}
 
-		private void InvokeSubscriptions()
+		private void InvokeSubscriptions(TValue value)
 		{
-			pingInProgress = true;
+			broadcastInProgress = true;
 
 			for (int i = 0; i < currentSubscriptionsBufferCount; i++)
 			{
 				if (currentSubscriptionsBuffer[i] != null)
-					currentSubscriptionsBuffer[i].Invoke();
+					currentSubscriptionsBuffer[i].Invoke(value);
 			}
 
-			pingInProgress = false;
+			broadcastInProgress = false;
 		}
 
 		private void EmptyBuffer()

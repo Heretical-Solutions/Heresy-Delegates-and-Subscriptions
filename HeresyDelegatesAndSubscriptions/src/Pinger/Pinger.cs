@@ -8,7 +8,7 @@ namespace HereticalSolutions.Delegates.Pinging
 	{
 		private Action multicastDelegate;
 
-		#region IPublisher
+		#region IPublisherNoArgs
 		
 		public void Publish()
 		{
@@ -17,7 +17,7 @@ namespace HereticalSolutions.Delegates.Pinging
 
 		#endregion
 		
-		#region ISubscribable
+		#region ISubscribableNoArgs
 		
 		public void Subscribe(Action @delegate)
 		{

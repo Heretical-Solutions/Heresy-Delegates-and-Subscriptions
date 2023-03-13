@@ -6,14 +6,14 @@ using HereticalSolutions.Pools;
 
 namespace HereticalSolutions.Delegates.Subscriptions
 {
-    public class SubscriptionNoArgs
-        : ISubscription<INonAllocSubscribableNoArgs>,
-          ISubscriptionHandler<INonAllocSubscribableNoArgs, IInvokableNoArgs>
+    public class SubscriptionMultipleArgs
+        : ISubscription<INonAllocSubscribableMultipleArgs>,
+          ISubscriptionHandler<INonAllocSubscribableMultipleArgs, IInvokableMultipleArgs>
     {
-        public SubscriptionNoArgs(
-            Action @delegate)
+        public SubscriptionMultipleArgs(
+            Action<object[]> @delegate)
         {
-            Delegate = DelegatesFactory.BuildDelegateWrapperNoArgs(@delegate);
+            Delegate = DelegatesFactory.BuildDelegateWrapperMultipleArgs(@delegate);
 
             Active = false;
 
@@ -26,9 +26,9 @@ namespace HereticalSolutions.Delegates.Subscriptions
         
         public bool Active { get; private set;  }
         
-        public INonAllocSubscribableNoArgs Publisher { get; private set; }
+        public INonAllocSubscribableMultipleArgs Publisher { get; private set; }
 
-        public void Subscribe(INonAllocSubscribableNoArgs publisher)
+        public void Subscribe(INonAllocSubscribableMultipleArgs publisher)
         {
             if (Active)
                 return;
@@ -48,13 +48,13 @@ namespace HereticalSolutions.Delegates.Subscriptions
 
         #region ISubscriptionHandler
 
-        public IInvokableNoArgs Delegate { get; private set; }
+        public IInvokableMultipleArgs Delegate { get; private set; }
 
-        public IPoolElement<IInvokableNoArgs> PoolElement { get; private set; }
+        public IPoolElement<IInvokableMultipleArgs> PoolElement { get; private set; }
         
         public void Activate(
-            INonAllocSubscribableNoArgs publisher,
-            IPoolElement<IInvokableNoArgs> poolElement)
+            INonAllocSubscribableMultipleArgs publisher,
+            IPoolElement<IInvokableMultipleArgs> poolElement)
         {
             PoolElement = poolElement;
 

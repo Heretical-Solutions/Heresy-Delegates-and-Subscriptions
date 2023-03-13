@@ -6,14 +6,14 @@ using HereticalSolutions.Pools;
 
 namespace HereticalSolutions.Delegates.Subscriptions
 {
-    public class SubscriptionNoArgs
-        : ISubscription<INonAllocSubscribableNoArgs>,
-          ISubscriptionHandler<INonAllocSubscribableNoArgs, IInvokableNoArgs>
+    public class SubscriptionSingleArg
+        : ISubscription<INonAllocSubscribableSingleArg>,
+          ISubscriptionHandler<INonAllocSubscribableSingleArg, IInvokableSingleArg>
     {
-        public SubscriptionNoArgs(
-            Action @delegate)
+        public SubscriptionSingleArg(
+            Action<object> @delegate)
         {
-            Delegate = DelegatesFactory.BuildDelegateWrapperNoArgs(@delegate);
+            Delegate = DelegatesFactory.BuildDelegateWrapperSingleArg(@delegate);
 
             Active = false;
 
@@ -26,9 +26,9 @@ namespace HereticalSolutions.Delegates.Subscriptions
         
         public bool Active { get; private set;  }
         
-        public INonAllocSubscribableNoArgs Publisher { get; private set; }
+        public INonAllocSubscribableSingleArg Publisher { get; private set; }
 
-        public void Subscribe(INonAllocSubscribableNoArgs publisher)
+        public void Subscribe(INonAllocSubscribableSingleArg publisher)
         {
             if (Active)
                 return;
@@ -48,13 +48,13 @@ namespace HereticalSolutions.Delegates.Subscriptions
 
         #region ISubscriptionHandler
 
-        public IInvokableNoArgs Delegate { get; private set; }
+        public IInvokableSingleArg Delegate { get; private set; }
 
-        public IPoolElement<IInvokableNoArgs> PoolElement { get; private set; }
+        public IPoolElement<IInvokableSingleArg> PoolElement { get; private set; }
         
         public void Activate(
-            INonAllocSubscribableNoArgs publisher,
-            IPoolElement<IInvokableNoArgs> poolElement)
+            INonAllocSubscribableSingleArg publisher,
+            IPoolElement<IInvokableSingleArg> poolElement)
         {
             PoolElement = poolElement;
 
