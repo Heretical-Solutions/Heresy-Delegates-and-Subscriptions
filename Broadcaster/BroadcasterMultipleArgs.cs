@@ -13,7 +13,7 @@ namespace HereticalSolutions.Delegates.Broadcasting
             this.innerBroadcaster = innerBroadcaster;
         }
 
-        #region IPublisherMultipleArguments
+        #region IPublisherMultipleArgs
 
         public void Publish(object[] values)
         {
@@ -22,7 +22,7 @@ namespace HereticalSolutions.Delegates.Broadcasting
 
         #endregion
 
-        #region ISubscribableSMultipleArguments
+        #region ISubscribableMultipleArgs
 		
         public void Subscribe(Action<object[]> @delegate)
         {
