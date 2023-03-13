@@ -5,7 +5,7 @@ using HereticalSolutions.Pools;
 
 namespace HereticalSolutions.Delegates.Pinging
 {
-	public class PingerNonAlloc
+	public class NonAllocPinger
 		: IPublisherNoArgs,
 		  INonAllocSubscribableNoArgs
 	{
@@ -29,7 +29,7 @@ namespace HereticalSolutions.Delegates.Pinging
 		
 		private bool pingInProgress = false;
 
-		public PingerNonAlloc(
+		public NonAllocPinger(
 			INonAllocDecoratedPool<IInvokableNoArgs> subscriptionsPool,
 			INonAllocPool<IInvokableNoArgs> subscriptionsContents)
 		{
@@ -50,16 +50,16 @@ namespace HereticalSolutions.Delegates.Pinging
 			#region Validate
 			
 			if (subscription.Active)
-				throw new Exception("[PingerNonAlloc] ATTEMPT TO ACTIVATE A SUBSCRIPTION THAT IS ALREADY ACTIVE");
+				throw new Exception("[NonAllocPinger] ATTEMPT TO ACTIVATE A SUBSCRIPTION THAT IS ALREADY ACTIVE");
 			
 			if (subscription.Publisher != null)
-				throw new Exception("[PingerNonAlloc] SUBSCRIPTION ALREADY HAS A PUBLISHER");
+				throw new Exception("[NonAllocPinger] SUBSCRIPTION ALREADY HAS A PUBLISHER");
 			
 			if (subscription.PoolElement != null)
-				throw new Exception("[PingerNonAlloc] SUBSCRIPTION ALREADY HAS A POOL ELEMENT");
+				throw new Exception("[NonAllocPinger] SUBSCRIPTION ALREADY HAS A POOL ELEMENT");
 			
 			if (subscription.Delegate == null)
-				throw new Exception("[PingerNonAlloc] INVALID DELEGATE");
+				throw new Exception("[NonAllocPinger] INVALID DELEGATE");
 			
 			#endregion
 			
@@ -75,13 +75,13 @@ namespace HereticalSolutions.Delegates.Pinging
 			#region Validate
 			
 			if (!subscription.Active)
-				throw new Exception("[PingerNonAlloc] ATTEMPT TO TERMINATE A SUBSCRIPTION THAT IS ALREADY ACTIVE");
+				throw new Exception("[NonAllocPinger] ATTEMPT TO TERMINATE A SUBSCRIPTION THAT IS ALREADY ACTIVE");
 			
 			if (subscription.Publisher != this)
-				throw new Exception("[PingerNonAlloc] INVALID PUBLISHER");
+				throw new Exception("[NonAllocPinger] INVALID PUBLISHER");
 			
 			if (subscription.PoolElement == null)
-				throw new Exception("[PingerNonAlloc] INVALID POOL ELEMENT");
+				throw new Exception("[NonAllocPinger] INVALID POOL ELEMENT");
 			
 			#endregion
 

@@ -13,11 +13,6 @@ namespace HereticalSolutions.Delegates.Factories
             return new SubscriptionNoArgs(@delegate);
         }
         
-        public static SubscriptionSingleArg BuildSubscriptionSingleArg(Action<object> @delegate)
-        {
-            return new SubscriptionSingleArg(@delegate);
-        }
-        
         public static SubscriptionSingleArgGeneric<TValue> BuildSubscriptionSingleArgGeneric<TValue>(Action<TValue> @delegate)
         {
             return new SubscriptionSingleArgGeneric<TValue>(@delegate);

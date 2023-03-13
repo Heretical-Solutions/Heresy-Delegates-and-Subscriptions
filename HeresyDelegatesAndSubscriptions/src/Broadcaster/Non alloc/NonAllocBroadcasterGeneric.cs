@@ -2,7 +2,7 @@ using System;
 using HereticalSolutions.Collections;
 using HereticalSolutions.Pools;
 
-namespace HereticalSolutions.Delegates.Pinging
+namespace HereticalSolutions.Delegates.Broadcasting
 {
 	public class NonAllocBroadcasterGeneric<TValue>
 		: IPublisherSingleArgGeneric<TValue>,
@@ -49,16 +49,16 @@ namespace HereticalSolutions.Delegates.Pinging
 			#region Validate
 			
 			if (subscription.Active)
-				throw new Exception("[PingerNonAlloc] ATTEMPT TO ACTIVATE A SUBSCRIPTION THAT IS ALREADY ACTIVE");
+				throw new Exception("[NonAllocBroadcasterGeneric] ATTEMPT TO ACTIVATE A SUBSCRIPTION THAT IS ALREADY ACTIVE");
 			
 			if (subscription.Publisher != null)
-				throw new Exception("[PingerNonAlloc] SUBSCRIPTION ALREADY HAS A PUBLISHER");
+				throw new Exception("[NonAllocBroadcasterGeneric] SUBSCRIPTION ALREADY HAS A PUBLISHER");
 			
 			if (subscription.PoolElement != null)
-				throw new Exception("[PingerNonAlloc] SUBSCRIPTION ALREADY HAS A POOL ELEMENT");
+				throw new Exception("[NonAllocBroadcasterGeneric] SUBSCRIPTION ALREADY HAS A POOL ELEMENT");
 			
 			if (subscription.Delegate == null)
-				throw new Exception("[PingerNonAlloc] INVALID DELEGATE");
+				throw new Exception("[NonAllocBroadcasterGeneric] INVALID DELEGATE");
 			
 			#endregion
 			
@@ -74,13 +74,13 @@ namespace HereticalSolutions.Delegates.Pinging
 			#region Validate
 			
 			if (!subscription.Active)
-				throw new Exception("[PingerNonAlloc] ATTEMPT TO TERMINATE A SUBSCRIPTION THAT IS ALREADY ACTIVE");
+				throw new Exception("[NonAllocBroadcasterGeneric] ATTEMPT TO TERMINATE A SUBSCRIPTION THAT IS ALREADY ACTIVE");
 			
 			if (subscription.Publisher != this)
-				throw new Exception("[PingerNonAlloc] INVALID PUBLISHER");
+				throw new Exception("[NonAllocBroadcasterGeneric] INVALID PUBLISHER");
 			
 			if (subscription.PoolElement == null)
-				throw new Exception("[PingerNonAlloc] INVALID POOL ELEMENT");
+				throw new Exception("[NonAllocBroadcasterGeneric] INVALID POOL ELEMENT");
 			
 			#endregion
 
