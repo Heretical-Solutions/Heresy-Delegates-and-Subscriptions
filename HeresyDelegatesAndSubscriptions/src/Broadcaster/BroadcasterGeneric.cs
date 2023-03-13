@@ -3,8 +3,8 @@ using System;
 namespace HereticalSolutions.Delegates.Broadcasting
 {
 	public class BroadcasterGeneric<TValue>
-		: IPublisherSingleArgumentGeneric<TValue>,
-		  ISubscribableSingleArgumentGeneric<TValue>
+		: IPublisherSingleArgGeneric<TValue>,
+		  ISubscribableSingleArgGeneric<TValue>
 	{
 		private Action<TValue> multicastDelegate;
 		

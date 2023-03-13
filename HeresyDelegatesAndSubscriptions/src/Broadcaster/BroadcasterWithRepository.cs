@@ -4,8 +4,8 @@ using HereticalSolutions.Repositories;
 namespace HereticalSolutions.Delegates.Broadcasting
 {
     public class BroadcasterWithRepository
-        : IPublisherSingleArgument,
-          ISubscribableSingleArgument
+        : IPublisherSingleArg,
+          ISubscribableSingleArg
     {
         private readonly IReadOnlyObjectRepository broadcasterRepository;
 
@@ -25,7 +25,7 @@ namespace HereticalSolutions.Delegates.Broadcasting
                     out object broadcasterObject))
                 return;
 
-            var broadcaster = (IPublisherSingleArgumentGeneric<TValue>)broadcasterObject;
+            var broadcaster = (IPublisherSingleArgGeneric<TValue>)broadcasterObject;
             
             broadcaster.Publish(value);
         }
@@ -43,7 +43,7 @@ namespace HereticalSolutions.Delegates.Broadcasting
                     out object broadcasterObject))
                 return;
 
-            var broadcaster = (ISubscribableSingleArgumentGeneric<TValue>)broadcasterObject;
+            var broadcaster = (ISubscribableSingleArgGeneric<TValue>)broadcasterObject;
             
             broadcaster.Subscribe(@delegate);
         }
@@ -57,7 +57,7 @@ namespace HereticalSolutions.Delegates.Broadcasting
                     out object broadcasterObject))
                 return;
 
-            var broadcaster = (ISubscribableSingleArgumentGeneric<TValue>)broadcasterObject;
+            var broadcaster = (ISubscribableSingleArgGeneric<TValue>)broadcasterObject;
             
             broadcaster.Unsubscribe(@delegate);
         }

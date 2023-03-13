@@ -3,9 +3,9 @@ using HereticalSolutions.Pools;
 
 namespace HereticalSolutions.Delegates.Pinging
 {
-	public class PingerNonAllocNoArguments
-		: IPublisherNoArguments,
-		  ISubscribableNonAllocNoArguments<IPingHandler>
+	public class PingerNonAlloc
+		: IPublisherNoArgs,
+		  INonAllocSubscribableNoArgs
 	{
 		#region Subscriptions
 		
@@ -27,7 +27,7 @@ namespace HereticalSolutions.Delegates.Pinging
 		
 		private bool pingInProgress = false;
 
-		public PingerNonAllocNoArguments(
+		public Pinger(
 			INonAllocPool<IPingHandler> subscriptionsPool,
 			INonAllocPool<IPingHandler> subscriptionsContents)
 		{

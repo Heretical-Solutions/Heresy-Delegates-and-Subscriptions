@@ -2,13 +2,13 @@ using System;
 
 namespace HereticalSolutions.Delegates.Broadcasting
 {
-    public class BroadcasterMultipleArguments
-        : IPublisherMultipleArguments,
-          ISubscribableMultipleArguments
+    public class BroadcasterMultipleArgs
+        : IPublisherMultipleArgs,
+          ISubscribableMultipleArgs
     {
         private readonly BroadcasterGeneric<object[]> innerBroadcaster;
 
-        public BroadcasterMultipleArguments(BroadcasterGeneric<object[]> innerBroadcaster)
+        public BroadcasterMultipleArgs(BroadcasterGeneric<object[]> innerBroadcaster)
         {
             this.innerBroadcaster = innerBroadcaster;
         }

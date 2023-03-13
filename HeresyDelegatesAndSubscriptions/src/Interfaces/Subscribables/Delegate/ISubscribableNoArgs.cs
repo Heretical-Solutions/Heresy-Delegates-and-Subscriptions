@@ -2,7 +2,7 @@ using System;
 
 namespace HereticalSolutions.Delegates
 {
-    public interface ISubscribableNoArguments
+    public interface ISubscribableNoArgs
     {
         void Subscribe(Action @delegate);
         
