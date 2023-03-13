@@ -1,6 +1,6 @@
 namespace HereticalSolutions.Delegates
 {
-    public interface IPublisherNoArguments
+    public interface IPublisherNoArgs
     {
         void Publish();
     }

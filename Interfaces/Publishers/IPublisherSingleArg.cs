@@ -1,6 +1,6 @@
 namespace HereticalSolutions.Delegates
 {
-    public interface IPublisherSingleArgument
+    public interface IPublisherSingleArg
     {
         void Publish<TValue>(TValue value);
     }

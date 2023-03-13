@@ -3,10 +3,10 @@ using HereticalSolutions.Pools;
 
 namespace HereticalSolutions.Delegates.Broadcasting
 {
-	public class BroadcasterNonAllocNoArguments<TValue>
-		: IPublisherSingleArgument,
-		  IPublisherSingleArgumentGeneric<TValue>,
-		  ISubscribableNonAllocNoArguments<IBroadcastHandlerGeneric<TValue>>
+	public class BroadcasterNoArgs<TValue>
+		: IPublisherSingleArg,
+		  IPublisherSingleArgGeneric<TValue>,
+		  INonAllocSubscribableNoArgs<IBroadcastHandlerGeneric<TValue>>
 	{
 		#region Subscriptions
 		
@@ -28,7 +28,7 @@ namespace HereticalSolutions.Delegates.Broadcasting
 		
 		private bool broadcastInProgress = false;
 
-		public BroadcasterNonAllocNoArguments(
+		public BroadcasterNoArgs(
 			INonAllocPool<IBroadcastHandlerGeneric<TValue>> subscriptionsPool,
 			INonAllocPool<IBroadcastHandlerGeneric<TValue>> subscriptionsContents)
 		{

@@ -1,6 +1,6 @@
 namespace HereticalSolutions.Delegates
 {
-    public interface IPublisherMultipleArguments
+    public interface IPublisherMultipleArgs
     {
         void Publish(object[] values);
     }
