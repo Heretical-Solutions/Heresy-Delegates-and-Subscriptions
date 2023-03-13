@@ -15,6 +15,47 @@ namespace HereticalSolutions.Delegates.Factories
 {
     public static partial class DelegatesFactory
     {
+        #region Broadcaster multiple args
+
+        public static BroadcasterMultipleArgs BuildBroadcasterMultipleArgs()
+        {
+            return new BroadcasterMultipleArgs(
+                BuildBroadcasterGeneric<object[]>());
+        }
+
+        #endregion
+        
+        #region Broadcaster with repository
+
+        public static BroadcasterWithRepository BuildBroadcasterWithRepository(
+            object[] broadcastersByType)
+        {
+            IObjectRepository repository = RepositoriesFactory.BuildDictionaryObjectRepository();
+
+            foreach (var broadcaster in broadcastersByType)
+            {
+                repository.Add(broadcaster.GetType(), broadcaster);
+            }
+
+            return BuildBroadcasterWithRepository((IReadOnlyObjectRepository)repository);
+        }
+        
+        public static BroadcasterWithRepository BuildBroadcasterWithRepository(IReadOnlyObjectRepository repository)
+        {
+            return new BroadcasterWithRepository(repository);
+        }
+
+        #endregion
+        
+        #region Broadcaster generic
+
+        public static BroadcasterGeneric<T> BuildBroadcasterGeneric<T>()
+        {
+            return new BroadcasterGeneric<T>();
+        }
+
+        #endregion
+        
         #region Non alloc broadcaster multiple args
         
         public static NonAllocBroadcasterMultipleArgs BuildNonAllocBroadcasterMultipleArgs()
