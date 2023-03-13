@@ -1,4 +1,5 @@
 using System;
+using HereticalSolutions.Pools;
 
 namespace HereticalSolutions.Delegates.Subscriptions
 {
@@ -45,7 +46,7 @@ namespace HereticalSolutions.Delegates.Subscriptions
         #region ISubscriptionHandler
 
         public IInvokableNoArgs Delegate { get; private set; }
-        
+
         public IPoolElement<IInvokableNoArgs> PoolElement { get; private set; }
         
         public void Activate(
@@ -58,7 +59,7 @@ namespace HereticalSolutions.Delegates.Subscriptions
             
             Active = true;
         }
-
+        
         public void Terminate()
         {
             PoolElement = null;
